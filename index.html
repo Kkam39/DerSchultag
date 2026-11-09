@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Der Schultag</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:wght@400;600&display=swap">
+<style>
+/* Eine Zeitungsseite: bewusst nur helles Papier, kein Dark Mode */
+:root{--ink:#1a1a1a;--paper:#fbf8f1;--desk:#e9e6df;--rule:#cfc9bc;--muted:#6b665c;--gold:#b8860b;color-scheme:light}
+body{margin:0;background:var(--desk);color:var(--ink);font-family:"Source Serif 4",serif}
+.paper{max-width:620px;margin:0 auto;background:var(--paper);padding-block:20px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:border-box;min-height:100vh}
+@media(min-width:660px){.paper{margin:24px auto;padding:30px 30px 34px;min-height:0}}
+body{min-height:100%}
+.mast{text-align:center;border-bottom:3px double var(--ink);padding-bottom:6px}
+.mast h1{font:900 clamp(30px,9.5vw,64px)/1 "Playfair Display",serif;margin:0;white-space:nowrap}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;border-bottom:1px solid var(--ink);padding:7px 0}
+.mast{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:8px}
+.ear{font-size:11px;line-height:1.35;color:var(--muted);white-space:nowrap;text-align:left;padding-top:.45em}
+.ear.r{text-align:right;padding-right:2px}
+.mast h1{min-width:0}
+.mood{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--ink)}
+.mood .stars{gap:8px}
+.stars{display:flex;gap:3px}
+.star{width:34px;height:34px;position:relative}
+.star svg{position:absolute;inset:0;width:100%;height:100%}
+.star .fill{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
+.mood .lab{font:600 11px "Source Serif 4";text-transform:uppercase;letter-spacing:.14em}
+.mood .val{font:900 30px/1 "Playfair Display",serif}
+
+.time{font:600 10.5px "Source Serif 4";text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:3px}
+h2{font:700 1.1rem/1.18 "Playfair Display",serif;margin:0 0 6px;hyphens:auto;overflow-wrap:break-word}
+p{margin:0 0 7px;font-size:14.5px;line-height:1.5;hyphens:auto}
+
+/* Raster: 2 Spalten, auch am Handy */
+.grid{display:grid;grid-template-columns:1fr 1fr;column-gap:0}
+.grid{display:block}
+.row{display:grid;grid-template-columns:1fr 1fr;padding:16px 0;border-bottom:1px solid var(--rule)}
+.row.full{grid-template-columns:1fr}
+.row.end{border-bottom:0}
+.row>*{min-width:0}
+.l{padding-right:10px}.r{padding-left:10px}
+.stack .m+.m{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule)}
+.big h2{font-size:1.35rem}
+.m.half:nth-child(odd of .half){}
+.m.full{grid-column:1/-1}
+
+
+.lead h2{font-size:40px;line-height:1.08;margin-bottom:10px;white-space:nowrap}
+.m.end{border-bottom:0}
+.lead p{font-size:16px;line-height:1.55}
+.lead .two{display:grid;grid-template-columns:1fr 1fr;column-gap:20px;row-gap:4px;margin-top:22px}
+.lead .two p{font-size:14.5px}
+.lead .note{font-style:italic;color:var(--muted);font-size:13px;grid-column:1/-1;margin:0}
+.wide h2{font-size:1.35rem}
+.wide .body{columns:2;column-gap:20px}
+.quote{text-align:center}
+.quote blockquote{margin:2px 0 0;font:italic 700 1.15rem/1.3 "Playfair Display",serif}
+.quote.full blockquote{font-size:1.45rem}
+.quote cite{display:block;font-size:12px;color:var(--muted);margin-top:6px;font-style:normal}
+.kurz ul{list-style:none;margin:0;padding:0}
+.kurz li{font-size:14px;line-height:1.45;padding:4px 0}
+.kurz li:first-child{border-top:0;padding-top:0}
+.kurz li b{font-weight:600}
+.foot{border-top:3px double var(--ink);margin-top:-1px;padding-top:8px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* Freitags: Die Woche */
+.woche{border-top:3px double var(--ink);margin-top:4px;padding-top:14px}
+.woche .head{display:flex;justify-content:space-between;align-items:baseline}
+.woche h3{font:900 1.5rem/1 "Playfair Display",serif;margin:0}
+.woche svg{display:block;width:100%;height:auto;margin:10px 0 4px}
+.woche .best{font-size:14.5px;line-height:1.5;margin:10px 0 0}
+.woche .best b{font-family:"Playfair Display",serif}
+
+.opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.opts button,.fb button{font:600 14px "Source Serif 4",serif;color:var(--ink);background:transparent;border:1px solid var(--ink);padding:6px 12px;cursor:pointer}
+.opts button:hover,.fb button:hover{background:var(--ink);color:var(--paper)}
+.opts button:focus-visible,.fb button:focus-visible,.fb textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.hint{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:8px}
+.res{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center;font-size:14px;margin-top:6px}
+.res .b{height:7px;background:var(--rule)}.res .b i{display:block;height:100%;background:var(--ink)}
+.res .best+.b i{background:var(--gold)}
+.res span:nth-child(3n){font-variant-numeric:tabular-nums;color:var(--muted)}
+.fb{border-top:1px solid var(--ink);margin-top:14px;padding-top:12px}
+.fb summary{cursor:pointer;font:600 11px "Source Serif 4";text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.fb textarea{display:block;width:100%;box-sizing:border-box;margin:10px 0 8px;min-height:90px;font:15px/1.5 "Source Serif 4",serif;color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:8px}
+.aussortiert{border-top:1px solid var(--rule);margin-top:4px;padding-top:10px;font-size:13px;font-style:italic;color:var(--muted);text-align:center;white-space:nowrap;overflow:hidden}
+.status{padding:40px 0;text-align:center;color:var(--muted);font-style:italic}
+.archiv{border-top:1px solid var(--ink);margin-top:18px;padding-top:12px}
+.archiv summary{cursor:pointer;font:600 11px "Source Serif 4";text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.archiv ul{list-style:none;padding:0;margin:8px 0 0}
+.archiv li{padding:5px 0;font-size:14.5px}
+.archiv a{color:var(--ink)}
+.archiv a[aria-current]{font-weight:600;text-decoration:none}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+</style></head><body>
+<article class="paper">
+ <header class="mast"><span class="ear" id="datum"></span><h1 id="name">Der Schultag</h1><span class="ear r" id="nr"></span></header>
+ <div class="mood" id="mood"></div>
+ <section class="grid" id="grid"><p class="status">Die Zeitung wird geladen …</p></section>
+ <div id="woche"></div>
+ <details class="fb" id="fb"><summary>Feedback an die Redaktion</summary>
+  <label for="fbtext" class="hint" style="display:block;font-style:normal">Was gefällt dir, was fehlt, was nervt? Anonym.</label>
+  <textarea id="fbtext" maxlength="1000"></textarea>
+  <button type="button" id="fbsend">Abschicken</button> <span class="hint" id="fbok" hidden>Danke, ist angekommen.</span>
+ </details>
+ <details class="archiv" id="archiv" hidden><summary>Frühere Ausgaben</summary><ul id="liste"></ul></details>
+</article>
+<script>
+/* Quelle: veröffentlichtes Blatt "Ausgaben" der Google-Tabelle (Spalte A: nr, Spalte B: Ausgabe als JSON) */
+/* Leserpost-Formular (Umfrage + Feedback) */
+const FORM="1FAIpQLSe9tFA29PN76SqEx440GQwYpSnilvjkRxEto-kQb4gkDgy2kA", F_UMFRAGE="entry.1436316808", F_ANTWORT="entry.1155547040", F_FEEDBACK="entry.197529844";
+function senden(daten){return fetch("https://docs.google.com/forms/d/e/"+FORM+"/formResponse",{method:"POST",mode:"no-cors",body:new URLSearchParams(daten)}).catch(()=>{});}
+function lies(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function merk(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+const QUELLE="https://docs.google.com/spreadsheets/d/e/2PACX-1vSNj0_04g7ILUO9dtHEi5uBLRLby-6cO4R1iaTkNOZ_93opWXryCdsI834sEP-kc71PBCgY00eIDVzc/pub?gid=47443001&single=true&output=csv";
+
+/* ===== Ausgabe als Daten =====
+ gewicht 3 = Aufmacher (volle Breite, groß)
+ gewicht 2 = breiter Block (volle Breite, Text zweispaltig)
+ gewicht 1 = halber Block (zwei stehen nebeneinander)
+ gewicht 0 = Kurzmeldung (landet im Block "Kurz notiert")            */
+const esc=t=>t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const paras=a=>a.map(p=>`<p>${esc(p)}</p>`).join("");
+function html(x){
+ if(x.typ==="kurz")return`<div class="time">Kurz notiert</div><ul>${x.items.map(i=>`<li><b>${esc(i.zeit)}:</b> ${esc(i.titel)}${/[.?!]$/.test(i.titel)?"":"."} ${esc(i.text.join(" "))}</li>`).join("")}</ul>`;
+ if(x.typ==="umfrage"){const done=lies("umfrage-"+x.id);
+  return `<div class="time">Umfrage</div><h2>${esc(x.frage)}</h2>`+(done?`<p class="hint">Du hast „${esc(done)}“ gewählt. Das Ergebnis steht in der nächsten Ausgabe.</p>`:`<div class="opts">${x.optionen.map(o=>`<button type="button" data-umfrage="${esc(x.id)}" data-wahl="${esc(o)}">${esc(o)}</button>`).join("")}</div><p class="hint">Ergebnis in der nächsten Ausgabe.</p>`);}
+ if(x.typ==="ergebnis"){const sum=x.stimmen.reduce((a,o)=>a+o[1],0)||1,max=Math.max(...x.stimmen.map(o=>o[1]));
+  return `<div class="time">Ergebnis der Umfrage</div><h2>${esc(x.frage)}</h2><div class="res">${x.stimmen.map(o=>`<span class="${o[1]===max?"best":""}">${esc(o[0])}</span><span class="b"><i style="width:${o[1]/sum*100}%"></i></span><span>${Math.round(o[1]/sum*100)} %</span>`).join("")}</div><p class="hint">${sum} Stimmen</p>`;}
+ if(x.typ==="zitat")return`<div class="time">Zitat des Tages</div><blockquote>${esc(x.text)}</blockquote><cite>${esc(x.wer)}</cite>`;
+ let s=`<div class="time">${esc(x.zeit)}</div><h2>${esc(x.titel)}</h2><div class="body">${paras(x.text)}</div>`;
+ if(x.sichtweisen){const v=x.sichtweisen;s+=`<div class="two"><div class="time" style="grid-column:1/-1;margin:0">Zwei Sichtweisen</div><p><b>${esc(v.a.wer)}:</b> ${esc(v.a.text)}</p><p><b>${esc(v.b.wer)}:</b> ${esc(v.b.text)}</p>${v.notiz?`<p class="note">${esc(v.notiz)}</p>`:""}</div>`;}
+ return s;
+}
+
+
+function render(ausgabe){
+ document.getElementById("grid").innerHTML="";document.getElementById("woche").innerHTML="";
+ document.querySelector(".aussortiert")?.remove();
+ /* nur ab 4 aussortierten Lästerstellen, immer einzeilig */
+ if((ausgabe.aussortiert||0)>3){const p=document.createElement("p");p.className="aussortiert";p.textContent="Heute aussortiert: "+ausgabe.aussortiert+" Lästereien über andere";document.getElementById("grid").after(p);
+  let f=13;while(p.scrollWidth>p.clientWidth&&f>9){f-=.5;p.style.fontSize=f+"px";}}
+/* Kurzmeldungen zu EINEM Block zusammenfassen, an der Stelle der ersten */
+let B=[],kurz=null;
+for(const x of ausgabe.beitraege){
+ if(x.gewicht===0){ if(!kurz){kurz={typ:"kurz",gewicht:1,items:[]};B.push(kurz);} kurz.items.push(x); }
+ else B.push(x);
+}
+/* Aufbau in Reihen: Aufmacher oben, dann chronologisch.
+   pair = zwei halbe Blöcke nebeneinander
+   tall = ein großer Block (Gewicht 2) an einem Stück, daneben zwei kleine gestapelt; Seite wechselt
+   full = volle Breite, wenn nichts passt -> nie Lücken */
+const iL=B.reduce((b,x,i)=>x.gewicht>B[b].gewicht?i:b,0);
+const lead=B.splice(iL,1)[0];
+const rows=[{t:"full",x:lead,cls:"lead"}];
+const q=[...B];let seite=0;const small=x=>x&&x.gewicht<2;
+while(q.length){
+ const x=q.shift();
+ if(!small(x)){
+  if(small(q[0])&&small(q[1])) rows.push({t:"tall",x,s:[q.shift(),q.shift()],side:0});
+  else rows.push({t:"full",x,cls:"wide"});
+ } else if(small(q[0])) rows.push({t:"pair",a:x,b:q.shift()});
+ else if(q[0]&&small(q[1])){const big=q.shift();rows.push({t:"tall",x:big,s:[x,q.shift()],side:1});}
+ else rows.push({t:"full",x,cls:x.typ==="zitat"?"":"wide"});
+}
+const g=document.getElementById("grid");
+const cell=(x,extra)=>{const d=document.createElement("div");d.className=`m ${extra} ${x.typ==="zitat"?"quote":""} ${x.typ==="kurz"?"kurz":""}`;d.innerHTML=html(x);return d;};
+rows.forEach((r,i)=>{
+ const row=document.createElement("div");row.className="row "+r.t+(i===rows.length-1?" end":"");
+ if(r.t==="full") row.append(cell(r.x,r.cls||""));
+ if(r.t==="pair") row.append(cell(r.a,"l"),cell(r.b,"r"));
+ if(r.t==="tall"){const big=cell(r.x,"big"),st=document.createElement("div");st.className="stack";r.s.forEach(x=>st.append(cell(x,"")));
+  if(r.side){st.classList.add("l");big.classList.add("r");row.append(st,big);}else{big.classList.add("l");st.classList.add("r");row.append(big,st);}}
+ g.append(row);
+});
+document.getElementById("name").textContent=ausgabe.name;
+/* Aufmacher-Überschrift immer einzeilig: Schrift verkleinern, bis sie passt */
+function fit(){const h=document.querySelector('.lead h2');if(!h)return;h.style.fontSize='40px';let f=40;while(h.scrollWidth>h.clientWidth&&f>20){f--;h.style.fontSize=f+'px';}}
+document.fonts.ready.then(fit);
+document.getElementById("datum").innerHTML=ausgabe.datum.split(", ").map(esc).join("<br>");
+document.getElementById("nr").textContent="Ausgabe "+ausgabe.nr;
+function fitT(){const h=document.getElementById("name");let f=64;h.style.fontSize=f+"px";while(h.scrollWidth>h.clientWidth&&f>24){f--;h.style.fontSize=f+"px";}}
+document.fonts.ready.then(fitT);
+const P="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z";
+document.getElementById("mood").innerHTML=`<span class="lab">Stimmung</span><span class="stars">${[0,1,2,3,4].map(i=>`<span class="star" style="--p:${Math.max(0,Math.min(1,ausgabe.stimmung-i))*100}%"><svg viewBox="0 0 24 24"><path d="${P}" fill="none" stroke="var(--ink)" stroke-width="1.2"/></svg><svg class="fill" viewBox="0 0 24 24"><path d="${P}" fill="var(--gold)"/></svg></span>`).join("")}</span><span class="val">${ausgabe.stimmung.toFixed(1).replace(".",",")}</span>`;
+
+/* Freitags: Wochenrückblick mit Stimmungskurve */
+if(ausgabe.woche){
+ const w=ausgabe.woche,W=400,H=130,px=24,py=30;
+ const x=i=>px+i*(W-2*px)/(w.tage.length-1), y=v=>H-py-(v-1)/4*(H-2*py);
+ const pts=w.stimmung.map((v,i)=>`${x(i)},${y(v)}`).join(" ");
+ const grid=[1,3,5].map(v=>`<line x1="${px-10}" x2="${W-px+10}" y1="${y(v)}" y2="${y(v)}" stroke="var(--rule)" stroke-width="1"/>`).join("");
+ const dots=w.stimmung.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="5" fill="${i===w.stimmung.length-1?'var(--gold)':'var(--ink)'}"/><text x="${x(i)}" y="${y(v)-12}" text-anchor="middle" font-size="16" font-family="Source Serif 4,serif" fill="var(--ink)">${v.toFixed(1).replace(".",",")}</text><text x="${x(i)}" y="${H-4}" text-anchor="middle" font-size="15" font-family="Source Serif 4,serif" fill="var(--muted)">${w.tage[i]}</text>`).join("");
+ const s=document.createElement("section");s.className="woche";
+ s.innerHTML=`<div class="head"><h3>Die Woche</h3><span class="time">Stimmung Mo–Fr</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Stimmung der Woche">${grid}<polyline points="${pts}" fill="none" stroke="var(--ink)" stroke-width="1.5"/>${dots}</svg><p class="best"><b>Schlagzeile der Woche:</b> ${esc(w.schlagzeile)}. ${esc(w.text)}</p>`;
+ document.getElementById("woche").append(s);
+}
+
+window.fit=fit;window.fitT=fitT;
+}
+/* CSV robust einlesen (Felder mit Anführungszeichen, Kommas, Zeilenumbrüchen) */
+function csv(t){const rows=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];
+ if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++;}else q=false;}else f+=c;}
+ else if(c==='"')q=true;else if(c===','){r.push(f);f="";}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;r.push(f);rows.push(r);r=[];f="";}else f+=c;}
+ if(f||r.length){r.push(f);rows.push(r);}return rows;}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-umfrage]");
+ if(b){const id=b.dataset.umfrage,w=b.dataset.wahl;merk("umfrage-"+id,w);senden({[F_UMFRAGE]:id,[F_ANTWORT]:w});
+  const c=b.closest(".m");c.querySelector(".opts+.hint")?.remove();c.querySelector(".opts").outerHTML=`<p class="hint">Danke! Du hast „${esc(w)}“ gewählt. Das Ergebnis steht in der nächsten Ausgabe.</p>`;}
+ if(e.target.id==="fbsend"){const t=document.getElementById("fbtext");if(!t.value.trim())return;senden({[F_FEEDBACK]:t.value.trim()});t.value="";document.getElementById("fbok").hidden=false;}
+});
+let alle=[];
+function zeige(){
+ const want=parseInt(location.hash.slice(1),10);
+ const a=alle.find(x=>x.nr===want)||alle[0];
+ render(a);window.scrollTo(0,0);
+ const ul=document.getElementById("liste");
+ ul.innerHTML=alle.map(x=>`<li><a href="#${x.nr}" ${x===a?'aria-current="page"':''}>Ausgabe ${x.nr} · ${esc(x.datum)}</a></li>`).join("");
+ document.getElementById("archiv").hidden=alle.length<2;
+}
+fetch(QUELLE+(QUELLE.includes("?")?"&":"?")+"t="+Date.now())
+ .then(r=>{if(!r.ok)throw 0;return r.text();})
+ .then(t=>{alle=csv(t).slice(1).filter(r=>r[1]).map(r=>{try{return JSON.parse(r[1]);}catch(e){return null;}}).filter(Boolean).sort((a,b)=>b.nr-a.nr);
+  if(!alle.length)throw 0;zeige();addEventListener("hashchange",zeige);})
+ .catch(()=>{document.getElementById("grid").innerHTML='<p class="status">Die Ausgabe konnte gerade nicht geladen werden. Versuch es gleich noch einmal.</p>';});
+addEventListener("resize",()=>{if(window.fit){window.fit();window.fitT();}});
+</script>
+</body></html>
